@@ -4,7 +4,6 @@ import { HeroSlider } from "@/components/marketing/HeroSlider"
 import { QuickBar } from "@/components/marketing/QuickBar"
 import { OffersSection } from "@/components/marketing/OffersSection"
 import { FinanceSection } from "@/components/marketing/FinanceSection"
-import { WhyChooseUs } from "@/components/marketing/WhyChooseUs"
 import { ShowroomSection } from "@/components/marketing/ShowroomSection"
 import { FaqSection } from "@/components/marketing/FaqSection"
 import { LeadSection } from "@/components/marketing/LeadSection"
@@ -41,7 +40,7 @@ export default function HomePage() {
 
       {isSectionVisible(anchors.offers) && <OffersSection />}
       {isSectionVisible(anchors.finance) && <FinanceSection />}
-      <WhyChooseUs />
+      {/* Tạm ẩn: <WhyChooseUs /> */}
       {isSectionVisible(anchors.showroom) && <ShowroomSection />}
       {isSectionVisible(anchors.lead) && <LeadSection source="trang-chu" />}
       {isSectionVisible(anchors.faq) && <FaqSection />}

@@ -132,14 +132,16 @@ function Slide({ slide, active, first, position }: { slide: HeroSlide; active: b
           className={cn(photo ? "object-cover" : "object-contain px-4 pt-6 lg:left-[40%] lg:w-[58%] lg:px-0 lg:py-16")}
           style={photo && slide.focus ? { objectPosition: slide.focus } : undefined}
         />
-        {photo && (
+        {photo ? (
           <div aria-hidden className="absolute inset-0 hidden bg-gradient-to-r from-ink/85 via-ink/45 to-transparent lg:block" />
+        ) : (
+          <div aria-hidden className="absolute inset-y-0 left-0 hidden w-[65%] bg-gradient-to-r from-[#f8fafc] via-[#f8fafc]/80 to-transparent lg:block" />
         )}
       </div>
 
       {/* Nội dung */}
       <div className="shell relative lg:flex lg:h-full lg:items-center">
-        <div className={cn("max-w-xl py-6 lg:py-0 lg:pb-16", photo ? "lg:text-white" : "text-foreground")}>
+        <div className={cn("max-w-xl py-6 lg:py-0 lg:pb-16", photo ? "lg:text-white" : "text-ink lg:[text-shadow:0_1px_12px_rgb(255_255_255/0.9)]")}>
           <p
             className={cn(
               "inline-flex rounded-full px-3 py-1 text-[13px] font-semibold",
@@ -149,11 +151,11 @@ function Slide({ slide, active, first, position }: { slide: HeroSlide; active: b
             {slide.eyebrow}
           </p>
           <Title className="heading mt-4 text-[clamp(1.875rem,4.4vw,3.5rem)] leading-[1.08] text-balance">{slide.title}</Title>
-          <p className={cn("mt-4 max-w-lg text-[15px] leading-relaxed md:text-[17px]", photo ? "text-muted-foreground lg:text-white/85" : "text-muted-foreground")}>
+          <p className={cn("mt-4 max-w-lg text-[15px] leading-relaxed md:text-[17px]", photo ? "text-muted-foreground lg:text-white/85" : "text-muted-foreground lg:font-medium lg:text-ink-soft")}>
             {slide.text}
           </p>
           {vehicle && (
-            <p className={cn("mt-5 text-[15px]", photo ? "lg:text-white/85" : "")}>
+            <p className={cn("mt-5 text-[15px]", photo ? "lg:text-white/85" : "lg:font-medium")}>
               Giá niêm yết từ{" "}
               <span className={cn("heading text-2xl tabular md:text-3xl", photo ? "text-primary lg:text-white" : "text-primary")}>
                 {formatPrice(vehicle.priceFrom)}

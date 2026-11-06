@@ -10,7 +10,13 @@ import { VehicleCard } from "@/components/vehicle/VehicleCard"
 type Filter = CategoryId | "all"
 
 /** Xe nổi bật ở chế độ "Tất cả" — hiển thị đầu tiên, thẻ rộng 2 cột trên desktop. */
-const FEATURED_ID = "vf8"
+const FEATURED_ID = "vf5"
+/** Thứ tự ưu tiên ở chế độ "Tất cả": xe nổi bật trước, rồi đến các xe ghim tiếp theo; còn lại giữ thứ tự gốc. */
+const PINNED_IDS: readonly string[] = [FEATURED_ID, "limo"]
+const pinRank = (id: string) => {
+  const i = PINNED_IDS.indexOf(id)
+  return i === -1 ? PINNED_IDS.length : i
+}
 
 /** Lưới xe 1 / 2 / 3 cột, lọc theo phân khúc. */
 export function VehicleGrid() {
@@ -23,7 +29,7 @@ export function VehicleGrid() {
   const ids: readonly string[] | null = filter === "all" ? null : categories.find((c) => c.id === filter)!.ids
   const list = ids
     ? vehicles.filter((v) => ids.includes(v.id))
-    : [...vehicles].sort((a, b) => Number(b.id === FEATURED_ID) - Number(a.id === FEATURED_ID))
+    : [...vehicles].sort((a, b) => pinRank(a.id) - pinRank(b.id))
 
   return (
     <div>

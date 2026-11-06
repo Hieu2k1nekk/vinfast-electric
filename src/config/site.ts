@@ -4,24 +4,24 @@
  */
 export const siteConfig = {
   name: "VinFast Electric",
-  dealerName: "Đại lý VinFast [Tên đại lý — cần cập nhật]",
+  dealerName: "Đại lý VinFast",
   shortDescription:
     "Showroom ô tô điện VinFast tại Ninh Bình — xem xe, chọn màu, tính trả góp và đăng ký lái thử.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://vinfast-electric.example.com",
   locale: "vi_VN",
   hotline: {
-    display: "086.727.1960",
-    tel: "0867271960",
+    display: "086.522.9951",
+    tel: "0865229951",
   },
-  address: "Số 492, Đường 30/6, Phố Phúc Trì, Phường Hoa Lư, Tỉnh Ninh Bình",
+  address: "Đường 30/6, Phố Phúc Trì, Phường Hoa Lư, Tỉnh Ninh Bình",
   /** Kế thừa từ dự án cũ — cần xác nhận giờ mở cửa thực tế. */
   openingHours: "08:00 – 20:00, tất cả các ngày trong tuần",
   mapUrl:
     "https://www.google.com/maps/search/?api=1&query=" +
     encodeURIComponent("Số 492 Đường 30/6, Phúc Trì, Hoa Lư, Ninh Bình"),
   social: {
-    zalo: "https://zalo.me/0867271960",
-    facebook: "https://www.facebook.com/profile.php?id=61596056886051",
+    zalo: "https://zalo.me/0865229951",
+    facebook: "https://www.facebook.com/share/19dWpoL1g7/?mibextid=wwXIfr",
   },
 } as const
 
@@ -42,9 +42,9 @@ export const sectionVisibility: Record<SectionId, boolean> = {
   "dong-xe": true,
   "uu-dai": true,
   "tra-gop": true,
-  showroom: true,
-  "hoi-dap": true,
-  "lien-he": true,
+  showroom: false,
+  "hoi-dap": false,
+  "lien-he": false,
 }
 
 export function isSectionVisible(id: SectionId) {
