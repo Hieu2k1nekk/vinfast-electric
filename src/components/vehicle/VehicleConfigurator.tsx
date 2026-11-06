@@ -2,14 +2,10 @@
 
 import Image from "next/image"
 import { useState } from "react"
-import { AnimatePresence, m } from "motion/react"
-import { ArrowUpRight } from "lucide-react"
 
 import { paintOptions, photoOptions } from "@/data/catalog"
-import { formatCurrency, formatPrice, type Vehicle } from "@/data/vehicles"
-import { requestLead } from "@/lib/lead-events"
+import { formatCurrency, type Vehicle } from "@/data/vehicles"
 import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
 
 /**
  * Bộ chọn màu: bấm ô màu → đổi đúng ảnh màu tương ứng trong vehicles.ts.
@@ -26,43 +22,30 @@ export function VehicleConfigurator({ vehicle }: { vehicle: Vehicle }) {
   if (!current) return null
 
   return (
-    <div className="grid grid-cols-1 gap-px bg-border lg:grid-cols-12">
-      {/* Sân khấu ảnh */}
-      <div className="relative overflow-hidden bg-surface lg:col-span-8">
-        <div aria-hidden className="absolute inset-x-[10%] bottom-[12%] h-1/3 rounded-[50%] bg-volt/10 blur-[80px]" />
-        <div className="relative aspect-[16/10] w-full sm:aspect-[16/9]">
-          <AnimatePresence initial={false} mode="popLayout">
-            <m.div
-              key={current.src}
-              className="absolute inset-0"
-              initial={{ opacity: 0, x: 40 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -40 }}
-              transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <Image
-                src={current.src}
-                alt={`VinFast ${vehicle.name} — ${current.label}`}
-                fill
-                sizes="(min-width: 1024px) 64vw, 100vw"
-                className={current.fit === "contain" ? "object-contain p-4 sm:p-10" : "object-cover"}
-              />
-            </m.div>
-          </AnimatePresence>
-        </div>
-        <p className="absolute top-5 left-5 font-display text-[12px] font-semibold tabular text-muted-foreground">
-          {String(active + 1).padStart(2, "0")} / {String(options.length).padStart(2, "0")}
-        </p>
+    <div className="card overflow-hidden">
+      <div className="stage relative aspect-[16/10]">
+        <Image
+          key={current.src}
+          src={current.src}
+          alt={`VinFast ${vehicle.name} — ${current.label}`}
+          fill
+          preload={active === 0}
+          sizes="(min-width: 1024px) 58vw, 100vw"
+          className={cn("animate-in fade-in duration-300", current.fit === "contain" ? "object-contain p-4 sm:p-8" : "object-cover")}
+        />
+        <span className="absolute top-3 right-3 rounded-full bg-white/90 px-2.5 py-1 text-[12px] font-semibold text-muted-foreground shadow-sm tabular">
+          {active + 1} / {options.length}
+        </span>
       </div>
 
-      {/* Bảng chọn */}
-      <div className="flex flex-col bg-background p-6 sm:p-8 lg:col-span-4 lg:p-10">
-        <p className="kicker">{hasPaints ? "Màu ngoại thất" : "Góc nhìn"}</p>
-        <p className="mt-3 font-display text-3xl font-bold tracking-[-0.02em]" aria-live="polite">
-          {current.label}
-        </p>
-
-        <div role="radiogroup" aria-label={hasPaints ? "Chọn màu sơn" : "Chọn góc nhìn"} className="mt-6 flex flex-wrap gap-3">
+      <div className="flex flex-col gap-4 border-t border-border p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
+        <div className="min-w-0">
+          <p className="text-[13px] text-muted-foreground">{hasPaints ? "Màu ngoại thất" : "Ảnh thực tế"}</p>
+          <p className="text-[17px] font-bold" aria-live="polite">
+            {current.label}
+          </p>
+        </div>
+        <div role="radiogroup" aria-label={hasPaints ? "Chọn màu sơn" : "Chọn góc nhìn"} className="flex flex-wrap gap-2">
           {options.map((o, i) => (
             <button
               key={o.src}
@@ -73,48 +56,28 @@ export function VehicleConfigurator({ vehicle }: { vehicle: Vehicle }) {
               title={o.label}
               onClick={() => setActive(i)}
               className={cn(
-                "relative size-12 shrink-0 rounded-full border border-line-strong p-1 transition-[border-color,transform] duration-300 hover:scale-105",
-                i === active && "border-primary ring-1 ring-primary"
+                "relative size-10 shrink-0 rounded-full border p-1 transition-shadow",
+                i === active ? "border-primary ring-2 ring-primary/25" : "border-border hover:border-line-strong"
               )}
             >
               {o.color ? (
-                <span className="block size-full rounded-full shadow-[inset_0_0_0_1px_rgb(255_255_255/0.15)]" style={{ backgroundColor: o.color }} />
+                <span className="block size-full rounded-full border border-black/10" style={{ backgroundColor: o.color }} />
               ) : (
                 <span className="relative block size-full overflow-hidden rounded-full">
-                  <Image src={o.src} alt="" fill sizes="48px" className="object-cover" />
+                  <Image src={o.src} alt="" fill sizes="40px" className="object-cover" />
                 </span>
               )}
             </button>
           ))}
         </div>
-
-        <dl className="mt-8 border-t border-line-strong">
-          <div className="flex items-baseline justify-between gap-4 border-b border-border py-4">
-            <dt className="text-sm text-muted-foreground">Giá niêm yết từ</dt>
-            <dd className="font-display text-2xl font-bold tabular">{formatPrice(vehicle.priceFrom)}</dd>
-          </div>
-          {hasPaints && (
-            <div className="flex items-baseline justify-between gap-4 border-b border-border py-4">
-              <dt className="text-sm text-muted-foreground">Phụ phí màu nâng cao</dt>
-              <dd className="text-right font-display text-[15px] font-semibold tabular">
-                {vehicle.premiumPaintFee ? `+ ${formatCurrency(vehicle.premiumPaintFee)}` : "Liên hệ"}
-              </dd>
-            </div>
-          )}
-        </dl>
-        {hasPaints && (
-          <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
-            Phụ phí chỉ áp dụng cho màu thuộc nhóm nâng cao — chuyên viên xác nhận khi báo giá.
-          </p>
-        )}
-
-        <div className="mt-auto pt-8">
-          <Button size="lg" className="w-full" onClick={() => requestLead({ vehicle: vehicle.id, need: "mua-xe" })}>
-            Nhận báo giá {hasPaints ? current.label.toLowerCase() : ""}
-            <ArrowUpRight />
-          </Button>
-        </div>
       </div>
+      {hasPaints && (
+        <p className="border-t border-border bg-surface/60 px-4 py-2.5 text-[12px] text-muted-foreground sm:px-5">
+          {vehicle.premiumPaintFee
+            ? `Màu nhóm nâng cao phụ phí + ${formatCurrency(vehicle.premiumPaintFee)} — tư vấn viên xác nhận khi báo giá.`
+            : "Phụ phí màu nâng cao (nếu có): liên hệ để được xác nhận."}
+        </p>
+      )}
     </div>
   )
 }

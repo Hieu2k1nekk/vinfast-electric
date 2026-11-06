@@ -1,100 +1,103 @@
-import Image from "next/image"
-import { ArrowUpRight } from "lucide-react"
+import { CalendarClock, MessageCircleQuestion, Tag } from "lucide-react"
 
-import { anchors } from "@/config/site"
-import { offersBanner } from "@/data/marketing"
+import { anchors, siteConfig } from "@/config/site"
 import { OFFERS_DISCLAIMER, offers, type Offer } from "@/data/offers"
-import { cn } from "@/lib/utils"
 import { LeadButton } from "@/components/shared/LeadButton"
 import { Reveal } from "@/components/shared/Reveal"
 import { SectionHeader } from "@/components/shared/SectionHeader"
+import { Button } from "@/components/ui/button"
 
-/** Ưu đãi kiểu editorial trên nền giấy: con số lớn, bố cục bất đối xứng, dải banner ngang. */
+/** Ưu đãi: banner tổng quan + thẻ chương trình có điều kiện, mức ưu đãi và thời hạn rõ ràng. */
 export function OffersSection() {
-  const [lead, ...rest] = offers
-
   return (
-    <section id={anchors.offers} className="theme-paper section-pad">
+    <section id={anchors.offers} className="section-pad bg-white">
       <div className="shell">
         <SectionHeader
-          index="02"
-          kicker="Ưu đãi"
-          title={<>Lên xe điện, nhẹ hơn bạn nghĩ.</>}
-          intro={OFFERS_DISCLAIMER}
+          eyebrow="Ưu đãi"
+          title="Chương trình ưu đãi đang áp dụng"
+          intro="Mỗi chương trình có điều kiện riêng. Gửi thông tin để được kiểm tra bạn thuộc nhóm nào và mức ưu đãi cụ thể cho dòng xe bạn chọn."
         />
 
-        <div className="mt-14 grid grid-cols-1 gap-px bg-border md:mt-20 lg:grid-cols-12">
-          {lead && <OfferBlock offer={lead} featured className="lg:col-span-7 lg:row-span-2" />}
-          {rest.map((o, i) => (
-            <OfferBlock key={o.id} offer={o} className={cn("lg:col-span-5", i === 2 && "lg:col-span-12")} wide={i === 2} />
-          ))}
-        </div>
-      </div>
-
-      {/* Banner ngang */}
-      <Reveal className="shell mt-16 md:mt-24">
-        <div className="relative isolate overflow-hidden bg-night text-[#f5f5f2]">
-          <Image
-            src={offersBanner.src}
-            alt={offersBanner.alt}
-            fill
-            sizes="(min-width: 1440px) 1344px, 100vw"
-            className="-z-10 object-cover opacity-55"
-          />
-          <div className="absolute inset-0 -z-10 bg-gradient-to-r from-night via-night/70 to-transparent" />
-          <div className="grid gap-8 p-8 sm:p-12 md:grid-cols-[1.3fr_1fr] md:items-end md:p-16">
-            <p className="display text-[clamp(2rem,4.4vw,3.75rem)] text-balance">
-              Ưu đãi nào hợp với bạn? Hỏi trực tiếp, nhận câu trả lời trong ngày.
-            </p>
-            <div className="md:justify-self-end">
-              <LeadButton size="lg" className="bg-volt text-night hover:bg-[#f5f5f2] hover:text-night" prefill={{ need: "mua-xe" }}>
-                Nhận tư vấn ưu đãi
-                <ArrowUpRight />
+        {/* Banner */}
+        <Reveal className="mt-10">
+          <div className="flex flex-col gap-6 rounded-2xl bg-primary p-6 text-white sm:p-8 md:flex-row md:items-center md:justify-between lg:p-10">
+            <div className="max-w-2xl">
+              <p className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-[13px] font-semibold">
+                <Tag className="size-3.5" />
+                {offers.length} chương trình
+              </p>
+              <p className="heading mt-3 text-[clamp(1.5rem,2.8vw,2.25rem)] leading-tight text-balance">
+                Ưu đãi đến 9% giá niêm yết (MSRP) cho khách hàng đủ điều kiện
+              </p>
+              <p className="mt-2 text-[15px] text-white/80">
+                Áp dụng cho nhóm Công an – Bộ đội, nhân viên VN POST và khách đổi xe xăng sang điện. Mức cụ thể tuỳ dòng xe.
+              </p>
+            </div>
+            <div className="grid shrink-0 gap-2 sm:grid-cols-2 md:grid-cols-1">
+              <LeadButton size="lg" variant="light" prefill={{ need: "mua-xe" }}>
+                Kiểm tra ưu đãi của tôi
               </LeadButton>
+              <Button asChild size="lg" variant="ghost" className="text-white hover:bg-white/10 hover:text-white">
+                <a href={`tel:${siteConfig.hotline.tel}`}>Gọi {siteConfig.hotline.display}</a>
+              </Button>
             </div>
           </div>
+        </Reveal>
+
+        <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2 lg:gap-6">
+          {offers.map((o) => (
+            <OfferCard key={o.id} offer={o} />
+          ))}
         </div>
-      </Reveal>
+
+        <p className="mt-6 text-[13px] leading-relaxed text-muted-foreground">{OFFERS_DISCLAIMER}</p>
+      </div>
     </section>
   )
 }
 
-function OfferBlock({ offer, featured, wide, className }: { offer: Offer; featured?: boolean; wide?: boolean; className?: string }) {
+function OfferCard({ offer }: { offer: Offer }) {
   return (
-    <Reveal className={cn("flex flex-col bg-background p-7 sm:p-10", featured && "lg:p-14", className)}>
-      <article className={cn("flex h-full flex-col", wide && "lg:grid lg:grid-cols-12 lg:gap-10")}>
-        <div className={cn(wide && "lg:col-span-5")}>
-          <p
-            className={cn(
-              "display tabular",
-              featured ? "text-[clamp(5rem,14vw,11rem)]" : "text-[clamp(3.5rem,8vw,5.5rem)]"
-            )}
-          >
-            {offer.headline.value}
-          </p>
-          <p className="kicker mt-3">{offer.headline.caption}</p>
-          <h3 className={cn("mt-6 font-display font-bold tracking-[-0.02em] text-balance", featured ? "text-3xl md:text-4xl" : "text-2xl")}>
-            {offer.title}
-          </h3>
-          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{offer.eligibility}</p>
+    <Reveal className="card flex flex-col p-6 sm:p-7">
+      <article className="flex h-full flex-col">
+        <div className="flex items-start justify-between gap-4">
+          <h3 className="heading text-xl leading-snug text-balance">{offer.title}</h3>
+          <div className="shrink-0 rounded-lg bg-primary-soft px-3 py-2 text-right">
+            <p className="heading text-2xl leading-none text-primary tabular">{offer.headline.value}</p>
+            <p className="mt-1 text-[11px] font-medium text-primary/80">{offer.headline.caption}</p>
+          </div>
         </div>
 
-        <div className={cn("mt-8 flex flex-1 flex-col", wide && "lg:col-span-7 lg:mt-0")}>
-          <dl className="border-t border-line-strong">
-            {offer.tiers.map((t) => (
-              <div key={t.models} className="flex items-baseline justify-between gap-6 border-b border-border py-3.5">
-                <dt className="text-sm">{t.models}</dt>
-                <dd className="shrink-0 font-display text-sm font-bold tabular">{t.value}</dd>
-              </div>
-            ))}
-          </dl>
-          {offer.note && <p className="mt-3 text-xs text-muted-foreground">{offer.note}</p>}
-          <div className="mt-auto pt-8">
-            <LeadButton variant="link" prefill={{ need: "mua-xe" }}>
-              Hỏi về ưu đãi này
-              <ArrowUpRight />
-            </LeadButton>
-          </div>
+        <div className="mt-4">
+          <p className="text-[13px] font-semibold text-foreground">Điều kiện</p>
+          <p className="mt-1 text-[14px] leading-relaxed text-muted-foreground">{offer.eligibility}</p>
+        </div>
+
+        <dl className="mt-4 overflow-hidden rounded-lg border border-border">
+          {offer.tiers.map((t) => (
+            <div key={t.models} className="flex items-baseline justify-between gap-4 border-b border-border px-4 py-2.5 last:border-b-0 odd:bg-surface/60">
+              <dt className="text-[14px]">{t.models}</dt>
+              <dd className="shrink-0 text-[14px] font-bold tabular">{t.value}</dd>
+            </div>
+          ))}
+        </dl>
+        {offer.note && <p className="mt-3 text-[13px] text-muted-foreground">{offer.note}</p>}
+
+        <div className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-5">
+          <p className="inline-flex items-center gap-1.5 text-[13px] text-muted-foreground">
+            <CalendarClock className="size-4 shrink-0" />
+            {offer.validUntil ? (
+              <>
+                Thời hạn: <span className="font-semibold text-foreground">đến {offer.validUntil}</span>
+              </>
+            ) : (
+              "Thời hạn: liên hệ để xác nhận"
+            )}
+          </p>
+          <LeadButton variant="outline" size="sm" prefill={{ need: "mua-xe" }}>
+            <MessageCircleQuestion />
+            Hỏi ưu đãi này
+          </LeadButton>
         </div>
       </article>
     </Reveal>

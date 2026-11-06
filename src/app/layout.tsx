@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next"
-import { Inter, Montserrat } from "next/font/google"
+import { Be_Vietnam_Pro, Inter } from "next/font/google"
 
 import { siteConfig } from "@/config/site"
 import { vehicles } from "@/data/vehicles"
@@ -15,8 +15,8 @@ const inter = Inter({
   display: "swap",
 })
 
-const montserrat = Montserrat({
-  variable: "--font-montserrat",
+const heading = Be_Vietnam_Pro({
+  variable: "--font-heading-face",
   subsets: ["latin", "vietnamese"],
   weight: ["500", "600", "700", "800"],
   display: "swap",
@@ -47,8 +47,8 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: "#0e0f12",
-  colorScheme: "dark",
+  themeColor: "#ffffff",
+  colorScheme: "light",
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
@@ -73,11 +73,11 @@ const dealerJsonLd = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="vi" data-scroll-behavior="smooth" className={`${inter.variable} ${montserrat.variable} antialiased`}>
+    <html lang="vi" data-scroll-behavior="smooth" className={`${inter.variable} ${heading.variable} antialiased`}>
       <body>
         <a
           href="#noi-dung"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:rounded-sm focus:bg-primary focus:px-4 focus:py-2.5 focus:text-sm focus:text-primary-foreground"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2.5 focus:text-sm focus:text-primary-foreground"
         >
           Bỏ qua đến nội dung chính
         </a>

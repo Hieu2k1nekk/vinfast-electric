@@ -17,11 +17,6 @@ export function categoryOf(vehicle: Vehicle) {
   return categories.find((c) => (c.ids as readonly string[]).includes(vehicle.id)) ?? categories[0]
 }
 
-/** Số thứ tự hiển thị kiểu tạp chí: 01, 02… */
-export function indexLabel(vehicle: Vehicle) {
-  return String(vehicles.indexOf(vehicle) + 1).padStart(2, "0")
-}
-
 /** Ảnh màu sơn (ảnh tách nền có mã màu) — dùng cho bộ cấu hình màu. */
 export function paintOptions(vehicle: Vehicle) {
   return vehicle.gallery.filter((g) => g.color)

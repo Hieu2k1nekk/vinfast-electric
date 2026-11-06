@@ -9,13 +9,15 @@ export function Providers({ children }: { children: React.ReactNode }) {
       <MotionConfig reducedMotion="user">
         {children}
         <Toaster
-          theme="dark"
+          theme="light"
           position="top-center"
+          richColors
+          closeButton
           toastOptions={{
             classNames: {
-              toast: "!rounded-sm !border-white/15 !bg-[#17191e] !text-[#f5f5f2] !font-sans !text-[14px]",
-              description: "!text-[#96989f]",
-              actionButton: "!rounded-sm !bg-[#3ddc97] !text-[#06140d] !font-semibold",
+              toast: "!rounded-xl !font-sans !text-[14px] !shadow-lift",
+              actionButton: "!rounded-md !bg-[#1464f4] !text-white !font-semibold",
+              cancelButton: "!rounded-md !font-semibold",
             },
           }}
         />

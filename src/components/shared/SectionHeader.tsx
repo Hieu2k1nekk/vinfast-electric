@@ -1,31 +1,31 @@
 import { cn } from "@/lib/utils"
-import { Reveal } from "@/components/shared/Reveal"
 
 type SectionHeaderProps = {
-  /** Số chương kiểu tạp chí, VD "02". */
-  index: string
-  kicker: string
+  eyebrow: string
   title: React.ReactNode
   intro?: React.ReactNode
-  className?: string
-  /** Nội dung phụ bên phải (nút, bộ lọc…). */
+  /** Nội dung phụ bên phải (nút, liên kết…). */
   aside?: React.ReactNode
+  align?: "left" | "center"
+  className?: string
+  /** Dùng thẻ h1 thay vì h2 (trang con). */
+  as?: "h1" | "h2"
 }
 
-/** Đầu section kiểu editorial: số chương + kẻ ngang + tiêu đề lớn. */
-export function SectionHeader({ index, kicker, title, intro, aside, className }: SectionHeaderProps) {
+/** Đầu section: nhãn nhỏ màu xanh + tiêu đề + mô tả ngắn. */
+export function SectionHeader({ eyebrow, title, intro, aside, align = "left", className, as: Tag = "h2" }: SectionHeaderProps) {
+  const centered = align === "center"
   return (
-    <Reveal className={cn("grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-end", className)}>
-      <div className="lg:col-span-8">
-        <div className="mb-6 flex items-center gap-4 md:mb-8">
-          <span className="font-display text-[13px] font-semibold text-primary tabular">{index}</span>
-          <span className="h-px w-10 bg-line-strong" aria-hidden />
-          <p className="kicker">{kicker}</p>
-        </div>
-        <h2 className="display text-title text-balance">{title}</h2>
-        {intro && <p className="mt-6 max-w-xl text-[15px] leading-relaxed text-muted-foreground md:text-base">{intro}</p>}
+    <div className={cn("flex flex-col gap-6 md:flex-row md:items-end md:justify-between", centered && "items-center text-center md:flex-col md:items-center", className)}>
+      <div className={cn("max-w-2xl", centered && "mx-auto")}>
+        <p className="eyebrow">
+          <span aria-hidden className="h-0.5 w-5 rounded-full bg-primary" />
+          {eyebrow}
+        </p>
+        <Tag className="heading mt-3 text-title leading-[1.15] text-balance">{title}</Tag>
+        {intro && <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground md:text-base">{intro}</p>}
       </div>
-      {aside && <div className="lg:col-span-4 lg:justify-self-end">{aside}</div>}
-    </Reveal>
+      {aside && <div className="shrink-0">{aside}</div>}
+    </div>
   )
 }

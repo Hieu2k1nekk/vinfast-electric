@@ -10,7 +10,6 @@ import { SectionHeader } from "@/components/shared/SectionHeader"
 import { ModelPager } from "@/components/vehicle/ModelPager"
 import { PhotoGallery } from "@/components/vehicle/PhotoGallery"
 import { SpecSheet } from "@/components/vehicle/SpecSheet"
-import { VehicleConfigurator } from "@/components/vehicle/VehicleConfigurator"
 import { VehicleHero } from "@/components/vehicle/VehicleHero"
 
 export function generateStaticParams() {
@@ -71,37 +70,28 @@ export default async function VehiclePage({ params }: PageProps<"/xe/[id]">) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <VehicleHero vehicle={vehicle} />
 
-      <section id="cau-hinh" className="section-pad scroll-mt-16">
-        <div className="shell">
-          <SectionHeader index="A" kicker="Cấu hình" title="Chọn màu của bạn." />
-          <div className="mt-12 border border-border md:mt-16">
-            <VehicleConfigurator vehicle={vehicle} />
-          </div>
-        </div>
-      </section>
-
       {showGallery && (
-        <section className="overflow-hidden pb-20 md:pb-28">
+        <section id="hinh-anh" className="overflow-hidden bg-white py-14 md:py-20">
           <div className="shell">
-            <SectionHeader index="B" kicker="Hình ảnh" title="Bên trong khoang xe." />
-            <div className="mt-10">
+            <SectionHeader eyebrow="Hình ảnh thực tế" title={`Ảnh chụp thực tế VinFast ${vehicle.name}`} />
+            <div className="mt-6">
               <PhotoGallery name={vehicle.name} photos={photos} />
             </div>
           </div>
         </section>
       )}
 
-      <section className="theme-paper section-pad">
+      <section id="thong-so" className="section-pad">
         <div className="shell">
-          <SectionHeader index={showGallery ? "C" : "B"} kicker="Thông số & giá" title={`${vehicle.name} trong con số.`} />
-          <div className="mt-12 border border-border md:mt-16">
+          <SectionHeader eyebrow="Thông số & giá" title={`VinFast ${vehicle.name}: thông số và bảng giá`} />
+          <div className="mt-8">
             <SpecSheet vehicle={vehicle} />
           </div>
         </div>
       </section>
 
-      {isSectionVisible(anchors.finance) && <FinanceSection index={showGallery ? "D" : "C"} defaultVehicleId={vehicle.id} />}
-      {isSectionVisible(anchors.lead) && <LeadSection index={showGallery ? "E" : "D"} defaultVehicle={vehicle.id} source={`xe/${vehicle.id}`} />}
+      {isSectionVisible(anchors.finance) && <FinanceSection defaultVehicleId={vehicle.id} className="section-pad bg-white" />}
+      {isSectionVisible(anchors.lead) && <LeadSection defaultVehicle={vehicle.id} source={`xe/${vehicle.id}`} />}
       <ModelPager vehicle={vehicle} />
     </>
   )

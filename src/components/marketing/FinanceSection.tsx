@@ -2,17 +2,16 @@ import { anchors } from "@/config/site"
 import { FinanceCalculator } from "@/components/calculator/FinanceCalculator"
 import { SectionHeader } from "@/components/shared/SectionHeader"
 
-export function FinanceSection({ index = "03", defaultVehicleId }: { index?: string; defaultVehicleId?: string }) {
+export function FinanceSection({ defaultVehicleId, className }: { defaultVehicleId?: string; className?: string }) {
   return (
-    <section id={anchors.finance} className="section-pad">
+    <section id={anchors.finance} className={className ?? "section-pad"}>
       <div className="shell">
         <SectionHeader
-          index={index}
-          kicker="Trả góp"
-          title="Tính trước khoản trả hàng tháng."
-          intro="Chọn mẫu xe, kéo tỷ lệ trả trước và nhập lãi suất bạn được ngân hàng báo. Mọi con số đều là ước tính để bạn hình dung trước khi gặp tư vấn."
+          eyebrow="Trả góp"
+          title="Ước tính trả góp hàng tháng"
+          intro="Chọn mẫu xe, tỷ lệ trả trước và thời hạn vay. Con số chỉ để tham khảo — tư vấn viên sẽ gửi phương án theo ngân hàng thực tế."
         />
-        <div className="mt-14 border border-border md:mt-20">
+        <div className="mt-10">
           <FinanceCalculator defaultVehicleId={defaultVehicleId} />
         </div>
       </div>

@@ -4,23 +4,26 @@ import { cn } from "@/lib/utils"
 import { Slot } from "radix-ui"
 
 const buttonVariants = cva(
-  "group/button inline-flex shrink-0 items-center justify-center gap-2.5 rounded-sm border border-transparent font-display text-[13px] font-semibold tracking-[0.06em] whitespace-nowrap uppercase transition-[background-color,color,border-color] duration-300 ease-editorial outline-none select-none focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "group/button inline-flex shrink-0 items-center justify-center gap-2 rounded-lg border border-transparent text-[15px] font-semibold whitespace-nowrap transition-[background-color,color,border-color,box-shadow] duration-200 outline-none select-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
-        /** Nút chính — xanh điện trên nền tối, đen trên nền giấy (theo token --primary). */
-        default: "bg-primary text-primary-foreground hover:bg-foreground hover:text-background",
-        outline: "border-line-strong text-foreground hover:border-foreground hover:bg-foreground hover:text-background",
+        /** CTA chính — xanh VinFast. */
+        default: "bg-primary text-primary-foreground shadow-[0_6px_16px_-6px_rgb(20_100_244/0.55)] hover:bg-brand-dark",
+        /** CTA phụ nền đậm. */
+        secondary: "bg-secondary text-secondary-foreground hover:opacity-90",
+        outline: "border-line-strong bg-card text-foreground hover:border-primary hover:text-primary",
+        /** Dùng trên ảnh / nền tối. */
+        light: "bg-white text-ink hover:bg-white/90",
         ghost: "text-foreground hover:bg-accent",
-        /** Nút chữ có gạch chân, dùng cho liên kết phụ. */
-        link: "h-auto rounded-none border-0 border-b border-current px-0 pb-1 text-foreground hover:text-primary",
-        destructive: "bg-destructive/15 text-destructive hover:bg-destructive/25",
+        link: "h-auto border-0 px-0 text-primary underline-offset-4 hover:underline",
+        destructive: "bg-destructive/10 text-destructive hover:bg-destructive/20",
       },
       size: {
-        default: "h-12 px-6",
-        sm: "h-10 px-4 text-[12px]",
-        lg: "h-14 px-8",
-        icon: "size-12",
+        default: "h-11 px-5",
+        sm: "h-9 px-3.5 text-[14px]",
+        lg: "h-12 px-6 text-base",
+        icon: "size-11",
         "icon-sm": "size-10",
       },
     },

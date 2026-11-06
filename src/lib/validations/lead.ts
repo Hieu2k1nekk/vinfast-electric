@@ -33,7 +33,8 @@ const baseFields = {
       message: "Số điện thoại không hợp lệ (VD: 0912 345 678)",
     }),
   vehicle: z.enum(vehicleIds, { message: "Vui lòng chọn dòng xe quan tâm" }),
-  region: z.string().trim().min(1, "Vui lòng chọn khu vực").max(60),
+  /** Không còn trên form rút gọn — giữ tùy chọn để tương thích dữ liệu webhook cũ. */
+  region: z.string().trim().max(60).optional(),
   need: z.enum(needValues, { message: "Vui lòng chọn nhu cầu" }),
   note: z.string().trim().max(500, "Ghi chú tối đa 500 ký tự").optional(),
 }

@@ -10,6 +10,8 @@ export type Offer = {
   eligibility: string
   tiers: { models: string; value: string }[]
   note?: string
+  /** Thời hạn — CHỈ ghi khi dữ liệu nguồn có. Bỏ trống → hiển thị "Liên hệ để xác nhận thời hạn". */
+  validUntil?: string
 }
 
 export const offers: Offer[] = [
@@ -54,6 +56,7 @@ export const offers: Offer[] = [
     title: "Miễn phí sạc",
     headline: { value: "2029", caption: "Miễn phí đến 10/02/2029" },
     eligibility: "Liên hệ để nhận hướng dẫn cụ thể.",
+    validUntil: "10/02/2029",
     tiers: [
       { models: "Thời hạn", value: "Đến 10/02/2029" },
       { models: "Áp dụng", value: "Tất cả các dòng xe" },

@@ -18,10 +18,10 @@ export function PhotoGallery({ name, photos }: { name: string; photos: GalleryIm
   return (
     <div>
       <div className="mb-6 flex justify-end gap-2">
-        <button id={prevId} type="button" aria-label="Ảnh trước" className="inline-flex size-11 items-center justify-center border border-line-strong transition-colors hover:border-primary hover:text-primary disabled:opacity-30">
+        <button id={prevId} type="button" aria-label="Ảnh trước" className="inline-flex size-10 items-center justify-center rounded-full border border-border bg-card transition-colors hover:border-primary hover:text-primary disabled:opacity-30">
           <ArrowLeft className="size-4" />
         </button>
-        <button id={nextId} type="button" aria-label="Ảnh sau" className="inline-flex size-11 items-center justify-center border border-line-strong transition-colors hover:border-primary hover:text-primary disabled:opacity-30">
+        <button id={nextId} type="button" aria-label="Ảnh sau" className="inline-flex size-10 items-center justify-center rounded-full border border-border bg-card transition-colors hover:border-primary hover:text-primary disabled:opacity-30">
           <ArrowRight className="size-4" />
         </button>
       </div>
@@ -55,7 +55,7 @@ export function PhotoGallery({ name, photos }: { name: string; photos: GalleryIm
 function Figure({ name, photo }: { name: string; photo: GalleryImage }) {
   return (
     <figure>
-      <div className="relative aspect-[16/10] overflow-hidden bg-surface">
+      <div className="relative aspect-[16/10] overflow-hidden rounded-xl bg-surface">
         <Image
           src={photo.src}
           alt={`VinFast ${name} — ${photo.label}`}

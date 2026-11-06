@@ -3,15 +3,15 @@
 @import "shadcn/tailwind.css";
 
 /* ------------------------------------------------------------------
- * ELECTRIC NIGHT — design tokens
- * Nền tối là mặc định. Section sáng dùng lớp `.theme-paper`, lớp này
- * ghi đè các biến màu nên mọi component bên trong tự đổi theo.
+ * VINFAST SALES — design tokens
+ * Nền sáng là mặc định. Khối tối (footer, thẻ kết quả trả góp, panel form)
+ * dùng lớp `.theme-dark` — lớp này ghi đè biến màu nên component bên trong tự đổi theo.
  * ------------------------------------------------------------------ */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-montserrat), var(--font-inter), ui-sans-serif, sans-serif;
+  --font-display: var(--font-heading-face), var(--font-inter), ui-sans-serif, sans-serif;
   --font-heading: var(--font-display);
 
   --color-ring: var(--ring);
@@ -28,77 +28,80 @@
   --color-secondary: var(--secondary);
   --color-primary-foreground: var(--primary-foreground);
   --color-primary: var(--primary);
+  --color-primary-soft: var(--primary-soft);
   --color-popover-foreground: var(--popover-foreground);
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
   --color-surface: var(--surface);
-  --color-night: #0e0f12;
-  --color-paper: #f4f1ec;
-  --color-volt: #3ddc97;
+  /* Màu cố định (không đổi theo theme) */
+  --color-brand: #1464f4;
+  --color-brand-dark: #0b4fd0;
+  --color-ink: #0f172a;
+  --color-ink-soft: #1e293b;
 
-  --radius-sm: 2px;
-  --radius-md: 3px;
-  --radius-lg: var(--radius);
-  --radius-xl: 4px;
-  --radius-2xl: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 14px;
+  --radius-2xl: 18px;
 
-  --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
+  --shadow-card: 0 1px 2px rgb(15 23 42 / 0.04), 0 4px 16px -4px rgb(15 23 42 / 0.08);
+  --shadow-lift: 0 2px 4px rgb(15 23 42 / 0.05), 0 18px 40px -12px rgb(15 23 42 / 0.18);
 
-  --text-mega: clamp(4.5rem, 19vw, 17rem);
-  --text-display: clamp(2.5rem, 7vw, 6rem);
-  --text-title: clamp(2rem, 4.6vw, 3.75rem);
+  --text-title: clamp(1.75rem, 3.2vw, 2.625rem);
 }
 
 :root {
-  --background: #0e0f12;
-  --foreground: #f5f5f2;
-  --surface: #17191e;
-  --card: #17191e;
-  --card-foreground: #f5f5f2;
-  --popover: #1c1e24;
-  --popover-foreground: #f5f5f2;
-  --primary: #3ddc97;
-  --primary-foreground: #06140d;
-  --secondary: #17191e;
-  --secondary-foreground: #f5f5f2;
-  --muted: #1c1e24;
-  --muted-foreground: #96989f;
-  --accent: rgb(255 255 255 / 0.06);
-  --accent-foreground: #f5f5f2;
-  --destructive: #ff6b5e;
-  --success: #3ddc97;
-  --border: rgb(255 255 255 / 0.12);
-  --line-strong: rgb(255 255 255 / 0.28);
-  --input: rgb(255 255 255 / 0.18);
-  --ring: #3ddc97;
-  --radius: 3px;
-  color-scheme: dark;
+  --background: #f5f7fa;
+  --foreground: #0f172a;
+  --surface: #eef2f7;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+  --primary: #1464f4;
+  --primary-foreground: #ffffff;
+  --primary-soft: #e8f0fe;
+  --secondary: #0f172a;
+  --secondary-foreground: #ffffff;
+  --muted: #eef2f7;
+  --muted-foreground: #556070;
+  --accent: #eef2f7;
+  --accent-foreground: #0f172a;
+  --destructive: #d92d20;
+  --success: #12a150;
+  --border: #e2e7ee;
+  --line-strong: #c8d0db;
+  --input: #cfd6e0;
+  --ring: #1464f4;
+  --radius: 10px;
+  color-scheme: light;
 }
 
-/* Section sáng (#F4F1EC). Màu nhấn đậm hơn để đạt độ tương phản trên nền sáng. */
-.theme-paper {
-  --background: #f4f1ec;
-  --foreground: #0e0f12;
-  --surface: #ebe7df;
-  --card: #fbfaf7;
-  --card-foreground: #0e0f12;
-  --popover: #fbfaf7;
-  --popover-foreground: #0e0f12;
-  --primary: #0e0f12;
-  --primary-foreground: #f5f5f2;
-  --secondary: #ebe7df;
-  --secondary-foreground: #0e0f12;
-  --muted: #ebe7df;
-  --muted-foreground: #5c5d63;
-  --accent: rgb(14 15 18 / 0.05);
-  --accent-foreground: #0e0f12;
-  --destructive: #c4321f;
-  --border: rgb(14 15 18 / 0.14);
-  --line-strong: rgb(14 15 18 / 0.4);
-  --input: rgb(14 15 18 / 0.22);
-  --ring: #0e0f12;
-  color-scheme: light;
+.theme-dark {
+  --background: #0f172a;
+  --foreground: #f8fafc;
+  --surface: #172036;
+  --card: #172036;
+  --card-foreground: #f8fafc;
+  --popover: #172036;
+  --popover-foreground: #f8fafc;
+  --primary: #3b82ff;
+  --primary-foreground: #ffffff;
+  --primary-soft: rgb(59 130 255 / 0.16);
+  --secondary: #ffffff;
+  --secondary-foreground: #0f172a;
+  --muted: #1e293b;
+  --muted-foreground: #a3adbd;
+  --accent: rgb(255 255 255 / 0.07);
+  --accent-foreground: #f8fafc;
+  --destructive: #ff7a6e;
+  --border: rgb(255 255 255 / 0.12);
+  --line-strong: rgb(255 255 255 / 0.24);
+  --input: rgb(255 255 255 / 0.2);
+  --ring: #3b82ff;
+  color-scheme: dark;
   background: var(--background);
   color: var(--foreground);
 }
@@ -116,23 +119,27 @@
     @apply bg-background text-foreground antialiased;
     overflow-x: clip;
   }
-  /* Neo cuộn tới section không bị header che */
+  /* Neo cuộn tới section không bị header dính che */
   section[id] {
-    scroll-margin-top: 64px;
+    scroll-margin-top: 76px;
+  }
+  @media (min-width: 1024px) {
+    section[id] {
+      scroll-margin-top: 112px;
+    }
   }
   button:not(:disabled),
   [role="button"]:not(:disabled) {
     cursor: pointer;
   }
   ::selection {
-    background: #3ddc97;
-    color: #06140d;
+    background: #1464f4;
+    color: #fff;
   }
   :focus-visible {
     outline: 2px solid var(--ring);
-    outline-offset: 3px;
+    outline-offset: 2px;
   }
-  /* Ẩn mũi tên tăng/giảm của ô nhập số */
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
@@ -145,24 +152,23 @@
 
 @layer components {
   .shell {
-    @apply mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-12;
+    @apply mx-auto w-full max-w-[1320px] px-4 sm:px-6 lg:px-8;
   }
   .section-pad {
-    @apply py-20 md:py-28 lg:py-32;
+    @apply py-16 md:py-20 lg:py-24;
   }
-  .kicker {
-    @apply font-display text-[11px] font-semibold tracking-[0.28em] text-muted-foreground uppercase;
+  /* Nhãn nhỏ phía trên tiêu đề section */
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-[13px] font-semibold text-primary;
   }
-  .display {
-    @apply font-display leading-[0.92] font-bold tracking-[-0.035em];
+  .heading {
+    @apply font-display font-bold tracking-[-0.02em];
+  }
+  .card {
+    @apply rounded-xl border border-border bg-card text-card-foreground shadow-card;
   }
   .tabular {
     font-variant-numeric: tabular-nums;
-  }
-  /* Chữ viền rỗng dùng cho tên xe cỡ khổng lồ */
-  .outline-text {
-    color: transparent;
-    -webkit-text-stroke: 1px rgb(245 245 242 / 0.22);
   }
   .no-scrollbar {
     scrollbar-width: none;
@@ -170,34 +176,42 @@
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
+  /* Sân khấu nền sáng cho ảnh xe tách nền */
+  .stage {
+    background:
+      radial-gradient(60% 50% at 50% 78%, rgb(15 23 42 / 0.1), transparent 70%),
+      linear-gradient(180deg, #f8fafc 0%, #eaeff5 100%);
+  }
   /* Thanh trượt của bộ tính trả góp */
   .range {
     @apply h-6 w-full cursor-pointer appearance-none bg-transparent;
     --fill: 50%;
   }
   .range::-webkit-slider-runnable-track {
-    height: 2px;
-    background: linear-gradient(to right, var(--primary) var(--fill), var(--input) var(--fill));
+    height: 6px;
+    border-radius: 999px;
+    background: linear-gradient(to right, var(--primary) var(--fill), var(--muted) var(--fill));
   }
   .range::-moz-range-track {
-    height: 2px;
-    background: linear-gradient(to right, var(--primary) var(--fill), var(--input) var(--fill));
+    height: 6px;
+    border-radius: 999px;
+    background: linear-gradient(to right, var(--primary) var(--fill), var(--muted) var(--fill));
   }
   .range::-webkit-slider-thumb {
     -webkit-appearance: none;
-    margin-top: -9px;
-    height: 20px;
-    width: 20px;
-    border-radius: 2px;
-    background: var(--foreground);
-    border: 4px solid var(--background);
-    box-shadow: 0 0 0 1px var(--foreground);
+    margin-top: -8px;
+    height: 22px;
+    width: 22px;
+    border-radius: 999px;
+    background: #fff;
+    border: 2px solid var(--primary);
+    box-shadow: 0 2px 6px rgb(15 23 42 / 0.2);
   }
   .range::-moz-range-thumb {
-    height: 14px;
-    width: 14px;
-    border-radius: 2px;
-    background: var(--foreground);
-    border: 3px solid var(--background);
+    height: 18px;
+    width: 18px;
+    border-radius: 999px;
+    background: #fff;
+    border: 2px solid var(--primary);
   }
 }

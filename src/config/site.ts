@@ -60,6 +60,9 @@ const allNavItems: { label: string; id: SectionId }[] = [
 ]
 
 /** Liên kết dạng "/#id" để dùng được cả từ trang chi tiết xe. */
-export const navItems = allNavItems
-  .filter((item) => isSectionVisible(item.id))
-  .map((item) => ({ ...item, href: `/#${item.id}` }))
+export const navItems: { label: string; id: string; href: string }[] = [
+  { label: "Trang chủ", id: "trang-chu", href: "/" },
+  ...allNavItems.filter((item) => isSectionVisible(item.id)).map((item) => ({ ...item, href: `/#${item.id}` })),
+]
+
+export const privacyPath = "/chinh-sach-bao-mat"

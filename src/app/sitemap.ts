@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next"
 
-import { siteConfig } from "@/config/site"
+import { privacyPath, siteConfig } from "@/config/site"
 import { vehicles } from "@/data/vehicles"
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -11,5 +11,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly" as const,
       priority: 0.8,
     })),
+    { url: `${siteConfig.url}${privacyPath}`, changeFrequency: "yearly", priority: 0.2 },
   ]
 }
