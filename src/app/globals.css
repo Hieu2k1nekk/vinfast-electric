@@ -1,0 +1,203 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+/* ------------------------------------------------------------------
+ * ELECTRIC NIGHT — design tokens
+ * Nền tối là mặc định. Section sáng dùng lớp `.theme-paper`, lớp này
+ * ghi đè các biến màu nên mọi component bên trong tự đổi theo.
+ * ------------------------------------------------------------------ */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-montserrat), var(--font-inter), ui-sans-serif, sans-serif;
+  --font-heading: var(--font-display);
+
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-line-strong: var(--line-strong);
+  --color-destructive: var(--destructive);
+  --color-success: var(--success);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-surface: var(--surface);
+  --color-night: #0e0f12;
+  --color-paper: #f4f1ec;
+  --color-volt: #3ddc97;
+
+  --radius-sm: 2px;
+  --radius-md: 3px;
+  --radius-lg: var(--radius);
+  --radius-xl: 4px;
+  --radius-2xl: 4px;
+
+  --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --text-mega: clamp(4.5rem, 19vw, 17rem);
+  --text-display: clamp(2.5rem, 7vw, 6rem);
+  --text-title: clamp(2rem, 4.6vw, 3.75rem);
+}
+
+:root {
+  --background: #0e0f12;
+  --foreground: #f5f5f2;
+  --surface: #17191e;
+  --card: #17191e;
+  --card-foreground: #f5f5f2;
+  --popover: #1c1e24;
+  --popover-foreground: #f5f5f2;
+  --primary: #3ddc97;
+  --primary-foreground: #06140d;
+  --secondary: #17191e;
+  --secondary-foreground: #f5f5f2;
+  --muted: #1c1e24;
+  --muted-foreground: #96989f;
+  --accent: rgb(255 255 255 / 0.06);
+  --accent-foreground: #f5f5f2;
+  --destructive: #ff6b5e;
+  --success: #3ddc97;
+  --border: rgb(255 255 255 / 0.12);
+  --line-strong: rgb(255 255 255 / 0.28);
+  --input: rgb(255 255 255 / 0.18);
+  --ring: #3ddc97;
+  --radius: 3px;
+  color-scheme: dark;
+}
+
+/* Section sáng (#F4F1EC). Màu nhấn đậm hơn để đạt độ tương phản trên nền sáng. */
+.theme-paper {
+  --background: #f4f1ec;
+  --foreground: #0e0f12;
+  --surface: #ebe7df;
+  --card: #fbfaf7;
+  --card-foreground: #0e0f12;
+  --popover: #fbfaf7;
+  --popover-foreground: #0e0f12;
+  --primary: #0e0f12;
+  --primary-foreground: #f5f5f2;
+  --secondary: #ebe7df;
+  --secondary-foreground: #0e0f12;
+  --muted: #ebe7df;
+  --muted-foreground: #5c5d63;
+  --accent: rgb(14 15 18 / 0.05);
+  --accent-foreground: #0e0f12;
+  --destructive: #c4321f;
+  --border: rgb(14 15 18 / 0.14);
+  --line-strong: rgb(14 15 18 / 0.4);
+  --input: rgb(14 15 18 / 0.22);
+  --ring: #0e0f12;
+  color-scheme: light;
+  background: var(--background);
+  color: var(--foreground);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+    -webkit-tap-highlight-color: transparent;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    overflow-x: clip;
+  }
+  /* Neo cuộn tới section không bị header che */
+  section[id] {
+    scroll-margin-top: 64px;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  ::selection {
+    background: #3ddc97;
+    color: #06140d;
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+  }
+  /* Ẩn mũi tên tăng/giảm của ô nhập số */
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+}
+
+@layer components {
+  .shell {
+    @apply mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-12;
+  }
+  .section-pad {
+    @apply py-20 md:py-28 lg:py-32;
+  }
+  .kicker {
+    @apply font-display text-[11px] font-semibold tracking-[0.28em] text-muted-foreground uppercase;
+  }
+  .display {
+    @apply font-display leading-[0.92] font-bold tracking-[-0.035em];
+  }
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+  /* Chữ viền rỗng dùng cho tên xe cỡ khổng lồ */
+  .outline-text {
+    color: transparent;
+    -webkit-text-stroke: 1px rgb(245 245 242 / 0.22);
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  /* Thanh trượt của bộ tính trả góp */
+  .range {
+    @apply h-6 w-full cursor-pointer appearance-none bg-transparent;
+    --fill: 50%;
+  }
+  .range::-webkit-slider-runnable-track {
+    height: 2px;
+    background: linear-gradient(to right, var(--primary) var(--fill), var(--input) var(--fill));
+  }
+  .range::-moz-range-track {
+    height: 2px;
+    background: linear-gradient(to right, var(--primary) var(--fill), var(--input) var(--fill));
+  }
+  .range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    margin-top: -9px;
+    height: 20px;
+    width: 20px;
+    border-radius: 2px;
+    background: var(--foreground);
+    border: 4px solid var(--background);
+    box-shadow: 0 0 0 1px var(--foreground);
+  }
+  .range::-moz-range-thumb {
+    height: 14px;
+    width: 14px;
+    border-radius: 2px;
+    background: var(--foreground);
+    border: 3px solid var(--background);
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "dev",
+      "detail": "Next.js dev server (http://localhost:3000) — tự cập nhật khi lưu code",
+      "type": "npm",
+      "script": "dev",
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "next",
+        "pattern": { "regexp": "^x^" },
+        "background": {
+          "beginsPattern": "Compiling|Starting",
+          "endsPattern": "Ready in|Compiled"
+        }
+      },
+      "presentation": { "reveal": "always", "panel": "dedicated" },
+      "runOptions": { "runOn": "folderOpen" }
+    }
+  ]
+}
